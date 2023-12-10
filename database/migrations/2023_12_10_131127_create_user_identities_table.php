@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('user_identities', function (Blueprint $table) {
             $table->id();
+            $table->string('email');
+            $table->string('password');
+            $table->string('first_name');
+            $table->string('role');
             $table->timestamps();
         });
     }

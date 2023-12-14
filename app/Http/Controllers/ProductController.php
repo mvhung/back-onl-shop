@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Products;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -16,7 +18,7 @@ class ProductController extends Controller
      */
     public function index(): \Illuminate\Http\JsonResponse
     {
-        $product = Product::all();
+        $product = Products::all();
         return response()->json($product);
     }
 
@@ -27,7 +29,7 @@ class ProductController extends Controller
      */
     public function getProductById(Request $request): \Illuminate\Http\JsonResponse
     {
-        $product = Product::query()->findOrFail($request->id);
+        $product = Products::query()->findOrFail($request->id);
         return response()->json($product);
     }
 
@@ -39,7 +41,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request): \Illuminate\Http\JsonResponse
     {
-        (new Product())->query()->create([
+        (new Products())->query()->create([
             'title'=>$request->title,
             'category'=>$request->category,
             'price'=>$request->price,
@@ -59,7 +61,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $updateProduct = Product::query()->findOrFail($id);
+        $updateProduct = Products::query()->findOrFail($id);
         $updateProduct->update([
             'title'=>$request->title,
             'category'=>$request->category,
@@ -79,7 +81,7 @@ class ProductController extends Controller
      */
     public function deleteProductById(Request $request): \Illuminate\Http\JsonResponse
     {
-        $deletedProduct = Product::query()->findOrFail($request->id)->delete();
+        $deletedProduct = Products::query()->findOrFail($request->id)->delete();
         return response()->json(['message' => 'Product successfully deleted']);
     }
 
@@ -90,7 +92,7 @@ class ProductController extends Controller
      */
     public function getProductByCategory(Request $request): \Illuminate\Http\JsonResponse
     {
-        $product = Product::query()->findOrFail($request->id);
+        $product =  DB::table('products')->where('category', $request->category)->get();
         return response()->json($product);
     }
 }

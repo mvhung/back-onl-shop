@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ShoppingCartController;
 use App\Models\UserIdentity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('/orders',[OrderController::class, 'store']);
+Route::get('/orders/getOrderbyCartId',[OrderController::class, 'getOrderByCartId']);
 
 Route::get('/getUserById', [\App\Http\Controllers\UserIdentityController::class, 'getUserIdentityById']);
 Route::delete('/deleteUserById', [\App\Http\Controllers\UserIdentityController::class, 'deleteUserById']);
@@ -27,4 +31,11 @@ Route::put('/updateUser/{id}', [\App\Http\Controllers\UserIdentityController::cl
 
 Route::get('/getAllCategories', [\App\Http\Controllers\CategoryController::class, 'index']);
 
-Route::get('/product/',[]);
+Route::get('/product/getbycategory',[ProductController::class,'getProductByCategory']);
+
+
+// shopping cart
+
+Route::post('/shoppingcart/creatshoppingcartbycartid',[ShoppingCartController::class,'createShoppingCart']);
+Route::put('/shoppingcart/updateshoppingcart',[ShoppingCartController::class,'updateShoppingCart']);
+Route::delete('/shoppingcart/deleteshoppingcart',[ShoppingCartController::class,'deleteShoppingCart']);

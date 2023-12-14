@@ -24,16 +24,16 @@ class UserIdentityController extends Controller
     public function getUserIdentityById(Request $request)
     {
         $result = UserIdentity::query()->findOrFail($request->id);
-        return $result;
+        return response()->json($result);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreUserIdentityRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreUserIdentityRequest $request)
+    public function store(StoreUserIdentityRequest $request): \Illuminate\Http\JsonResponse
     {
         (new UserIdentity())->query()->create([
             'email'=> $request->email,
@@ -49,9 +49,9 @@ class UserIdentityController extends Controller
      *
      * @param  \App\Http\Requests\UpdateUserIdentityRequest  $request
      * @param  \App\Models\UserIdentity  $userIdentity
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): \Illuminate\Http\JsonResponse
     {
         $updateUser = UserIdentity::query()->findOrFail($id);
         $updateUser->update([
@@ -68,9 +68,9 @@ class UserIdentityController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\UserIdentity  $userIdentity
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function deleteUserById(Request $request)
+    public function deleteUserById(Request $request): \Illuminate\Http\JsonResponse
     {
         $result = UserIdentity::query()->findOrFail($request->id)->delete();
         return response()->json(['message' => 'User successfully deleted']);

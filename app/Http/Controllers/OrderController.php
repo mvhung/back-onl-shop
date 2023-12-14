@@ -11,7 +11,6 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Orders::all();
-    //    dd('asdfdf');
         return response()->json($orders);
     }
 

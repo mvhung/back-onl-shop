@@ -24,3 +24,7 @@ Route::get('/getUserById', [\App\Http\Controllers\UserIdentityController::class,
 Route::delete('/deleteUserById', [\App\Http\Controllers\UserIdentityController::class, 'deleteUserById']);
 Route::post('/createUser', [\App\Http\Controllers\UserIdentityController::class, 'store']);
 Route::put('/updateUser/{id}', [\App\Http\Controllers\UserIdentityController::class, 'update']);
+
+Route::get('/getAllCategories', [\App\Http\Controllers\CategoryController::class, 'index']);
+
+Route::get('/product/',[]);

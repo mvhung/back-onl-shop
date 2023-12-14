@@ -9,6 +9,6 @@ class UserIdentity extends Model
 {
     use HasFactory;
 
-    protected $table ='UserIdentity';
+    protected $table ='user_identities';
     protected $fillable = ['id','email','password','first_name','role'];
 }

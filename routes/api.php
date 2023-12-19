@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ShoppingCartController;
+use App\Http\Controllers\EmailController;
 use App\Models\UserIdentity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -39,3 +40,5 @@ Route::get('/product/getbycategory',[ProductController::class,'getProductByCateg
 Route::post('/shoppingcart/creatshoppingcartbycartid',[ShoppingCartController::class,'createShoppingCart']);
 Route::put('/shoppingcart/updateshoppingcart',[ShoppingCartController::class,'updateShoppingCart']);
 Route::delete('/shoppingcart/deleteshoppingcart',[ShoppingCartController::class,'deleteShoppingCart']);
+
+Route::post('/message/send', [EmailController::class, 'addFeedback']);

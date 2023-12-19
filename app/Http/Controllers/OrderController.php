@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api');
+    // }
     public function index()
     {
         $orders = Orders::all();

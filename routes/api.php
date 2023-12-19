@@ -5,6 +5,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ShoppingCartController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\AuthController;
+use App\Models\Orders;
+use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,8 +31,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::group([ 'middleware' => 'auth:api'], function() {
+    //order
     Route::post('/orders',[OrderController::class, 'store']);
     Route::get('/orders/getOrderbyCartId',[OrderController::class, 'getOrderByCartId']);
+    Route::get('/orders/filterBy',[OrderController::class, 'filterOrders']);
+
     Route::get('/getUserById', [\App\Http\Controllers\UserIdentityController::class, 'getUserIdentityById']);
     Route::delete('/deleteUserById', [\App\Http\Controllers\UserIdentityController::class, 'deleteUserById']);
     Route::post('/createUser', [\App\Http\Controllers\UserIdentityController::class, 'store']);
@@ -41,5 +46,10 @@ Route::group([ 'middleware' => 'auth:api'], function() {
     Route::post('/shoppingcart/creatshoppingcartbycartid',[ShoppingCartController::class,'createShoppingCart']);
     Route::put('/shoppingcart/updateshoppingcart',[ShoppingCartController::class,'updateShoppingCart']);
     Route::delete('/shoppingcart/deleteshoppingcart',[ShoppingCartController::class,'deleteShoppingCart']);
+    Route::get('/shoppingcart/getbycartid',[ShoppingCartController::class,'getByCartId']);
+    Route::delete('/shoppingcart/clearCart/{id}',[ShoppingCartController::class,'clearShoppingCart']);
+    //email
     Route::post('/message/send', [EmailController::class, 'addFeedback']);
+    //placed order
+    Route::get('/placedorders',[OrderController::class,'getPlacedOrders']);
 });

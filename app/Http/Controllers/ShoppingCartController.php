@@ -32,6 +32,11 @@ class ShoppingCartController extends Controller
 
     // }
 
+    public function getByCartId(Request $request)
+    {
+        $shoping_cart = DB::table('shopping_carts')->where('cart_id', $request->cartId)->get();
+        return response()->json($shoping_cart);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -64,6 +69,25 @@ class ShoppingCartController extends Controller
         }
 
         // return response()->json(['message'=>'created default shopping cart','status'=>201]);
+    }
+
+    public function clearShoppingCart(Request $request, $cartId)
+    {
+        $shoppingCartList = ShoppingCart::where('cart_id', $cartId)->get();
+
+        if ($shoppingCartList->isEmpty()) {
+            throw new \RuntimeException("Shopping cart not found for cartId: $cartId");
+        }
+
+        // Set quantity to 0 for all items
+        $shoppingCartList->each(function ($item) {
+            $item->quantity = 0;
+            $item->save();
+        });
+
+        // Save all updated items
+
+        return response()->json(['message'=>'clear done']);
     }
 
     public function updateShoppingCart(Request $request)
@@ -128,7 +152,7 @@ class ShoppingCartController extends Controller
     {
         $cartId = $request->cart_id;
         $orderId = $request->order_id;
-        
+
         $shoppingCartList = DB::table('shopping_carts')->where('cart_id', $cartId)->get();
 
         if ($shoppingCartList->isEmpty()) {
@@ -153,6 +177,6 @@ class ShoppingCartController extends Controller
 
         $this->createDefaultShoppingCart($cartId);
 
-        return response()->json(['message'=>'asdhajksd']);
+        return response()->json(['message' => 'asdhajksd']);
     }
 }

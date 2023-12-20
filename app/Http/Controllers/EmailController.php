@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\MyEmail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 class EmailController extends Controller
 {
     public function addFeedback(Request $request)
     {
-        $input = $request->all();
-        Mail::send('mailfb', array('name'=>$input["name"],'email'=>$input["email"], 'content'=>$input['comment']), function($message){
-            $message->to('luuhieuhuy1005@gmail.com', 'Visitor')->subject('Visitor Feedback!');
+        Mail::send('emails.test', ['name' => $request->name,], function ($email){
+            $email->to('maihung1372002@gmail.com', 'Huy');
         });
-        Session::flash('flash_message', 'Send message successfully!');
-
-        return view('form');
+        return response()->json(['message' => " email sent"], 200);
     }
 }

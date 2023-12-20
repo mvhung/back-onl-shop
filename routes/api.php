@@ -49,7 +49,7 @@ Route::group([ 'middleware' => 'auth:api'], function() {
     Route::get('/shoppingcart/getbycartid',[ShoppingCartController::class,'getByCartId']);
     Route::delete('/shoppingcart/clearCart/{id}',[ShoppingCartController::class,'clearShoppingCart']);
     //email
-    Route::post('/message/send', [EmailController::class, 'addFeedback']);
+    Route::get('/message/send', [EmailController::class, 'addFeedback']);
     //placed order
     Route::get('/placedorders',[OrderController::class,'getPlacedOrders']);
 });

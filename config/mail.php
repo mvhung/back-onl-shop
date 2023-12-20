@@ -36,13 +36,13 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.gmail.com'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('my.online.shopp2023@gmail.com'),
-            'password' => env('huythoi123'),
+            'host' => 'smtp.gmail.com',
+            'port' => 587,
+            'encryption' => 'tls',
+            'username' => 'hhh.online.shop.2023@gmail.com',
+            'password' => 'bsbmdxnwuiylucbl',
             'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'auth_mode' => null,
         ],
 
         'ses' => [
@@ -92,8 +92,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'my.online.shopp2023@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => 'hhh.online.shop.2023@gmail.com',
+        'name' => 'Demo Shopping',
     ],
 
     /*

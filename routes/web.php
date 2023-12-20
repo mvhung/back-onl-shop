@@ -22,3 +22,5 @@ Route::get('/orders',[OrderController::class, 'index']);
 Route::post('/orders',[OrderController::class, 'store']);
 
 Route::get('/message/send', [EmailController::class, 'addFeedback']);
+Route::get('/message/sendOTP', [EmailController::class, 'sendOTP']);
+Route::get('/message/checkotp', [EmailController::class, 'checkOTP']);

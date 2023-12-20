@@ -53,3 +53,4 @@ Route::group([ 'middleware' => 'auth:api'], function() {
     //placed order
     Route::get('/placedorders',[OrderController::class,'getPlacedOrders']);
 });
+

@@ -26,6 +26,7 @@ return [
     'allowed_headers' => ['*'],
 
     'exposed_headers' => [],
+    'allowed_origins' => ['http://localhost:4200'],
 
     'max_age' => 0,
 

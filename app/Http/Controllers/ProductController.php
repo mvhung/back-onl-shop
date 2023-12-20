@@ -79,9 +79,9 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\JsonResponse
      */
-    public function deleteProductById(Request $request): \Illuminate\Http\JsonResponse
+    public function deleteProductById(Request $request, $productId): \Illuminate\Http\JsonResponse
     {
-        $deletedProduct = Products::query()->findOrFail($request->id)->delete();
+        $deletedProduct = Products::query()->findOrFail($productId)->delete();
         return response()->json(['message' => 'Product successfully deleted']);
     }
 

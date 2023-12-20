@@ -7,7 +7,7 @@
     }
 </style>
 <div class="test-email">
-    <h2>Hi {{$name}}</h2>
+    <h2>Hi {{$phoneNumber}}</h2>
     <p>
         Your OTP code is {{$otp}}.
     </p>

@@ -21,6 +21,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/orders',[OrderController::class, 'index']);
 Route::post('/orders',[OrderController::class, 'store']);
 
-Route::get('/message/send', [EmailController::class, 'addFeedback']);
-Route::get('/message/sendOTP', [EmailController::class, 'sendOTP']);
-Route::get('/message/checkotp', [EmailController::class, 'checkOTP']);
+Route::get('/orders/send-email', [EmailController::class, 'addFeedback']);
+Route::get('/authenticate/create-otp', [EmailController::class, 'sendOTP']);
+Route::get('/authenticate/verify-otp', [EmailController::class, 'checkOTP']);

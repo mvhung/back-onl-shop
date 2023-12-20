@@ -32,11 +32,11 @@ class AuthController extends Controller
 
         $user = Auth::user();
         return response()->json([
-                'status' => 'success',
-                'user' => $user,
-                'authorisation' => [
-                    'token' => $token,
-                    'type' => 'bearer',
+                'status' => 200,
+                'body' => [
+                    'accessToken' => $token,
+                    'currentUser' => $user->name,
+                    'cartId' => $user->id,
                 ]
             ]);
 
@@ -57,13 +57,11 @@ class AuthController extends Controller
 
         $token = Auth::login($user);
         return response()->json([
-            'status' => 'success',
-            'message' => 'User created successfully',
-            'user' => $user,
-            'authorisation' => [
-                'token' => $token,
-                'type' => 'bearer',
-            ]
+            'status' => 200,
+                'accessToken' => $token,
+                'currentUser' => $user->name,
+                'cartId' => $user->id,
+
         ]);
     }
 
@@ -85,6 +83,15 @@ class AuthController extends Controller
                 'token' => Auth::refresh(),
                 'type' => 'bearer',
             ]
+        ]);
+    }
+
+    public function getUser()
+    {
+        $user = Auth::user();
+        return response()->json([
+            'name' => $user->name,
+            'isAdmin' => false,
         ]);
     }
 

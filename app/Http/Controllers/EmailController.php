@@ -24,10 +24,10 @@ class EmailController extends Controller
     public function sendOTP(Request $request)
     {
         $email1 = $request->email;
-        $randomNumber = rand(0000, 9999); // Tạo số ngẫu nhiên từ 1000 đến 9999
+        $randomNumber = rand(000000, 999999); // Tạo số ngẫu nhiên từ 1000 đến 9999
         $randomString = strval($randomNumber);
         $this->otp = $randomString;
-            Mail::send('emails.otp', ['name' => $request->name, 'otp' => $randomString], function ($email) use ($email1) {
+            Mail::send('emails.otp', ['phoneNumber' => $request->phoneNumber, 'otp' => $randomString], function ($email) use ($email1) {
                 $email->to($email1, 'Huy')
                     ->subject('Mã xác nhận - HHHSHOP');
             });

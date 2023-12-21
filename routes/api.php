@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group([ 'middleware' => 'auth:api'], function() {
     Route::get("categories/getAll", [\App\Http\Controllers\CategoryController::class, 'index']);
     Route::get('/authenticate/get-user', [AuthController::class, 'getUser']);
+    Route::get('authenticate/get-all-users', [AuthController::class, 'getAllUser']);
     //order
     Route::post('/orders/create',[OrderController::class, 'store']);
     Route::get('/orders/get-order',[OrderController::class, 'getOrderByCartId']);
@@ -55,10 +56,11 @@ Route::group([ 'middleware' => 'auth:api'], function() {
 
 // shopping cart
     Route::post('/shopping-cart/new-cart',[ShoppingCartController::class,'createShoppingCart']);
-    Route::put('/shopping-cart/update-cart',[ShoppingCartController::class,'updateShoppingCart']);
+    Route::post('/shopping-cart/update-cart',[ShoppingCartController::class,'updateShoppingCart']);
     Route::delete('/shopping-cart/clear-cart',[ShoppingCartController::class,'deleteShoppingCart']);
-    Route::get('/shopping-cart/getById',[ShoppingCartController::class,'getByCartId']);
+//    Route::get('/shopping-cart/getById',[ShoppingCartController::class,'getByCartId']);
     Route::delete('/shopping-cart/clear-shopping-cart/{id}',[ShoppingCartController::class,'clearShoppingCart']);
+    Route::get('/shopping-cart/getById',[ShoppingCartController::class,'getShoppingCartDetail']);
     //email
 //    Route::get('/message/send', [EmailController::class, 'addFeedback']);
 });

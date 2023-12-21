@@ -15,7 +15,11 @@ class CategoryController extends Controller
      */
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
-        $data = Category::query()->paginate(10, ['*'], 'page', $request->page ?? 0);
-        return response()->json($data);
+        $title = [];
+        $data = Category::all();
+        foreach ($data as $category) {
+            $title[] = $category->title;
+        }
+        return response()->json($title);
     }
 }

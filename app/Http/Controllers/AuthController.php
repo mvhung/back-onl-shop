@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
@@ -52,10 +53,13 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'role' => 'USER',
             'password' => Hash::make($request->password),
         ]);
 
         $token = Auth::login($user);
+        $shoppingCartController = new ShoppingCartController();
+        $shoppingCartController->createDefaultShoppingcart($user->id);
         return response()->json([
             'status' => 200,
                 'accessToken' => $token,
@@ -91,8 +95,14 @@ class AuthController extends Controller
         $user = Auth::user();
         return response()->json([
             'name' => $user->name,
-            'isAdmin' => false,
+            'admin' => $user->role == "ADMIN" ? true : false,
         ]);
+    }
+
+    public function getAllUser(Request $request)
+    {
+        $user = DB::table('users')->where('role', 'ADMIN')->orWhere('role', 'USER')->get();
+        return response()->json($user);
     }
 
 }

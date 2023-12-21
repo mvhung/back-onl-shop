@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('address1');
             $table->string('address2');
-            $table->date('create_date');
+            $table->dateTimeTz('create_date');
             $table->string('city');
             $table->string('cart_id');
             $table->timestamps();

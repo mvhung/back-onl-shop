@@ -29,7 +29,7 @@ class ProductController extends Controller
      */
     public function getProductById(Request $request): \Illuminate\Http\JsonResponse
     {
-        $product = Products::query()->findOrFail($request->id);
+        $product = Products::query()->findOrFail($request->productId);
         return response()->json($product);
     }
 
@@ -59,14 +59,14 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $updateProduct = Products::query()->findOrFail($id);
+        $updateProduct = Products::query()->findOrFail($request->product['id']);
         $updateProduct->update([
-            'title'=>$request->title,
-            'category'=>$request->category,
-            'price'=>$request->price,
-            'image_url'=>$request->image_url
+            'title'=>$request->product['title'],
+            'category'=>$request->product['category'],
+            'price'=>$request->product['price'],
+            'image_url'=>$request->product['image_url']
         ]);
 
         return response()->json(['message' => 'Product successfully updated']);

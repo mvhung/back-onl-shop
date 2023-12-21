@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\MyEmail;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -12,10 +13,10 @@ class EmailController extends Controller
     public $otp;
     public function addFeedback(Request $request)
     {
-        $email1 = $request->email;
+        $user = DB::table('users')->where('id', $request->cartId)->get();
 
-        Mail::send('emails.test', ['name' => $request->name,], function ($email) use ($email1) {
-            $email->to($email1, 'Huy')
+        Mail::send('emails.test', ['name' => $user[0]->name], function ($email) use ($user) {
+            $email->to($user[0]->email, 'Huy')
                 ->subject('Đơn hàng của bạn đã đặt thành công');
         });
         return response()->json(['message' => "email sent"], 200);

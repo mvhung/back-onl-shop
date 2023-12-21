@@ -56,7 +56,7 @@ class ShoppingCartController extends Controller
     public function createDefaultShoppingcart($cartId)
     {
         $productIds = Products::all('id')->pluck('id');
-        // $shoppingCartList = []; 
+        // $shoppingCartList = [];
 
         foreach ($productIds as $id) {
             $defaultCart = new ShoppingCart();
@@ -92,9 +92,9 @@ class ShoppingCartController extends Controller
 
     public function updateShoppingCart(Request $request)
     {
-        $cartId = $request->get('cart_id');
+        $cartId = $request->get('cartId');
         $change = $request->get('change');
-        $productId = $request->get('product_id');
+        $productId = $request->get('product')['id'];
 
         $cart = ShoppingCart::where('cart_id', $cartId)
             ->where('product_id', $productId)
@@ -150,8 +150,8 @@ class ShoppingCartController extends Controller
     public function deleteShoppingCart(Request $request)
 
     {
-        $cartId = $request->cart_id;
-        $orderId = $request->order_id;
+        $cartId = $request->cartId;
+        $orderId = $request->orderId;
 
         $shoppingCartList = DB::table('shopping_carts')->where('cart_id', $cartId)->get();
 
@@ -165,11 +165,16 @@ class ShoppingCartController extends Controller
                 continue;
             }
 
-            $placed = new PlacedOrders();
-            $placed->order_id = $orderId;
-            $placed->product_id = $item->product_id;
-            $placed->quantity = $item->quantity;
-            $placed->save();
+            (new PlacedOrders())->query()->create([
+                'order_id'=>$orderId,
+                'product_id'=>$item->product_id,
+                'quantity'=>$item->quantity
+            ]);
+//            $placed = new PlacedOrders;
+//            $placed->order_id = $orderId;
+//            $placed->product_id = $item->product_id;
+//            $placed->quantity = $item->quantity;
+//            $placed->save();
         }
 
 
@@ -177,6 +182,30 @@ class ShoppingCartController extends Controller
 
         $this->createDefaultShoppingCart($cartId);
 
-        return response()->json(['message' => 'asdhajksd']);
+        return $shoppingCartList;
+    }
+
+    public function getShoppingCartDetail(Request $request)
+    {
+        $cartId = $request ->cartId;
+        $cart = ShoppingCart::where('cart_id', $cartId)->get();
+        if ($cart->isEmpty()) {
+            return null;
+        }
+
+        $items = [];
+        foreach ($cart as $inCart) {
+            $product = Products::find($inCart->product_id);
+            if (!$product) {
+                continue;
+            }
+            $item = ['products'=>$product, "quantity"=>$inCart->quantity];
+            $items[] = $item;
+        }
+
+        $res = ['cartId'=>$cartId,
+            'items'=>$items];
+
+        return  $res;
     }
 }

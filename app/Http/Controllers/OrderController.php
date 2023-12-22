@@ -45,9 +45,9 @@ class OrderController extends Controller
     public function getAllPlacedOrders(Request $request){
         $page = $request->query('page', 1); // Trang hiện tại, mặc định là trang 1
         $limit = $request->query('limit', 10); // Số lượng bản ghi trên mỗi trang, mặc định là 10
-    
+
         $orders = Orders::paginate($limit, ['*'], 'page', $page);
-    
+
         $res = [];
         foreach($orders as $order) {
             $item = [
@@ -63,7 +63,7 @@ class OrderController extends Controller
             ];
             $res[] = $item;
         }
-    
+
         return response()->json($res);
     }
 

@@ -42,20 +42,28 @@ class OrderController extends Controller
 
         return response()->json($listOrder);
     }
-    public function getAllPlacedOrders(){
-        $orders = Orders::all();
+    public function getAllPlacedOrders(Request $request){
+        $page = $request->query('page', 1); // Trang hiện tại, mặc định là trang 1
+        $limit = $request->query('limit', 10); // Số lượng bản ghi trên mỗi trang, mặc định là 10
+    
+        $orders = Orders::paginate($limit, ['*'], 'page', $page);
+    
         $res = [];
         foreach($orders as $order) {
             $item = [
                 "orderDate"=>$order->create_date,
                 "cartId"=>$order->cart_id,
-                "shipping"=>["name"=>$order->name,"addressLine1"=>$order->address1,"addressLine2"=>$order->address2,
+                "shipping"=>[
+                    "name"=>$order->name,
+                    "addressLine1"=>$order->address1,
+                    "addressLine2"=>$order->address2,
                     "city"=>$order->city
                 ],
                 "orderId"=>$order->order_id
             ];
-        $res[] = $item;
-    }
+            $res[] = $item;
+        }
+    
         return response()->json($res);
     }
 

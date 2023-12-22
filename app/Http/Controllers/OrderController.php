@@ -63,8 +63,15 @@ class OrderController extends Controller
             ];
             $res[] = $item;
         }
+        $response = [
+            'data' => $res,
+            'pageNumb' => $orders->currentPage(),
+            'pageSize' => $orders->perPage(),
+            'totalCount' => $orders->total(),
+            'last_page' => $orders->lastPage()
+        ];
     
-        return response()->json($res);
+        return response()->json($response);
     }
 
     public function filterOrders(Request $request)

@@ -39,15 +39,23 @@ class ProductController extends Controller
      * @param  \App\Http\Requests\StoreProductRequest  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreProductRequest $request): \Illuminate\Http\JsonResponse
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
         (new Products())->query()->create([
             'title'=>$request->title,
             'category'=>$request->category,
             'price'=>$request->price,
-            'image_url'=>$request->image_url
+            'image_url'=>$request->imageUrl
         ]);
-
+        // $order = new Orders;
+        // $order->name = $request->shipping['name'];
+        // $order->create_date = Carbon::now();
+        // $order->address1 = $request->shipping['addressLine1'];
+        // $order->address2 = $request->shipping['addressLine2'];
+        // $order->city = $request->shipping['city'];
+        // $order->cart_id = $request->cartId;
+        // $order->save();
+        // return $order;
         return response()->json(['message' => 'Product successfully created']);
     }
 
@@ -69,7 +77,7 @@ class ProductController extends Controller
             'image_url'=>$request->product['image_url']
         ]);
 
-        return response()->json(['message' => 'Product successfully updated']);
+        return response()->json(['message'=>'update successfull']);
 
     }
 

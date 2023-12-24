@@ -34,10 +34,12 @@ Route::group([ 'middleware' => 'auth:api'], function() {
     Route::get("categories/getAll", [\App\Http\Controllers\CategoryController::class, 'index']);
     Route::get('/authenticate/get-user', [AuthController::class, 'getUser']);
     Route::get('authenticate/get-all-users', [AuthController::class, 'getAllUser']);
+    Route::delete('/authenticate/delete-user/{email}',[AuthController::class,'deleteUser']);
     //order
     Route::post('/orders/create',[OrderController::class, 'store']);
     Route::get('/orders/get-order',[OrderController::class, 'getOrderByCartId']);
     Route::get('/orders/filter-orders',[OrderController::class, 'filterOrders']);
+    Route::get('/orders/load-more-orders',[OrderController::class, 'filterOrders']);
     //placed order
     Route::get('/orders/get-orders/placed',[OrderController::class,'getPlacedOrders']);
     Route::get('/orders/admin-get-orders',[OrderController::class,'getAllPlacedOrders']);

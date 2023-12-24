@@ -105,4 +105,10 @@ class AuthController extends Controller
         return response()->json($user);
     }
 
+    public function deleteUser(Request $request, $email)
+    {
+        $user = DB::table('users')->where('email', $email)->delete();
+        return response()->json($user);
+    }
+
 }

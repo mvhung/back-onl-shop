@@ -24,9 +24,25 @@ class OrderController extends Controller
 
     public function getOrderByCartId(Request $request): \Illuminate\Http\JsonResponse
     {
-        $order =  DB::table('orders')->where('cart_id', $request->cart_id)->get();
-        return response()->json($order);
+        $orders =  DB::table('orders')->where('cart_id', $request->cartId)->get();
+        $res = [];
+        foreach($orders as $order) {
+            $item = [
+                "orderDate"=>$order->create_date,
+                "cartId"=>$order->cart_id,
+                "shipping"=>[
+                    "name"=>$order->name,
+                    "addressLine1"=>$order->address1,
+                    "addressLine2"=>$order->address2,
+                    "city"=>$order->city
+                ],
+                "orderId"=>$order->order_id
+            ];
+            $res[] = $item;
+        }
+        return response()->json($res);
     }
+
     public function getPlacedOrders(Request $request){
         $listOrder = [];
         $placed_orders = DB::table('placed_orders')->where('order_id', $request->orderId)->get();
@@ -44,7 +60,7 @@ class OrderController extends Controller
     }
     public function getAllPlacedOrders(Request $request){
         $page = $request->query('page', 1); // Trang hiện tại, mặc định là trang 1
-        $limit = $request->query('limit', 10); // Số lượng bản ghi trên mỗi trang, mặc định là 10
+        $limit = $request->query('limit', 15); // Số lượng bản ghi trên mỗi trang, mặc định là 10
 
         $orders = Orders::paginate($limit, ['*'], 'page', $page);
 
@@ -81,10 +97,11 @@ class OrderController extends Controller
 
         // Handle date values
         $page = $request->query('pageNumb', 1);
+        $pageSize = $request->query('pageSize', 15);
         $orders = Orders::where('name', 'like', $customer)
             ->where('address1', 'like', $address)
             ->where('city', 'like', $phoneNumber)
-            ->paginate(10, ['*'], 'page', $page);
+            ->paginate($pageSize, ['*'], 'page', $page);
 
 
         $res = [];

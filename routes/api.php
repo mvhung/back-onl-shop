@@ -38,6 +38,8 @@ Route::group([ 'middleware' => 'auth:api'], function() {
     Route::post('/orders/create',[OrderController::class, 'store']);
     Route::get('/orders/get-order',[OrderController::class, 'getOrderByCartId']);
     Route::get('/orders/filter-orders',[OrderController::class, 'filterOrders']);
+    Route::get('/orders/load-more-orders',[OrderController::class, 'filterOrders']);
+
     //placed order
     Route::get('/orders/get-orders/placed',[OrderController::class,'getPlacedOrders']);
     Route::get('/orders/admin-get-orders',[OrderController::class,'getAllPlacedOrders']);
@@ -51,7 +53,7 @@ Route::group([ 'middleware' => 'auth:api'], function() {
     Route::get('/products/get',[ProductController::class,'getProductById']);
     Route::delete('/products/delete/{productId}',[ProductController::class,'deleteProductById']);
     Route::post('/products/create',[ProductController::class,'store']);
-    Route::put('/products/update',[ProductController::class,'update']);
+    Route::post('/products/update',[ProductController::class,'update']);
     Route::get('/products/getByCategory',[ProductController::class,'getProductByCategory']);
 
 // shopping cart

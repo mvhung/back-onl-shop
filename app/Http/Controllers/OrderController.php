@@ -44,7 +44,7 @@ class OrderController extends Controller
     }
     public function getAllPlacedOrders(Request $request){
         $page = $request->query('page', 1); // Trang hiện tại, mặc định là trang 1
-        $limit = $request->query('limit', 10); // Số lượng bản ghi trên mỗi trang, mặc định là 10
+        $limit = $request->query('limit', 15); // Số lượng bản ghi trên mỗi trang, mặc định là 10
 
         $orders = Orders::paginate($limit, ['*'], 'page', $page);
 
@@ -81,10 +81,11 @@ class OrderController extends Controller
 
         // Handle date values
         $page = $request->query('pageNumb', 1);
+        $pageSize = $request->query('pageSize', 15);
         $orders = Orders::where('name', 'like', $customer)
             ->where('address1', 'like', $address)
             ->where('city', 'like', $phoneNumber)
-            ->paginate(10, ['*'], 'page', $page);
+            ->paginate($pageSize, ['*'], 'page', $page);
 
 
         $res = [];

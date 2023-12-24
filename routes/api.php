@@ -53,7 +53,7 @@ Route::group([ 'middleware' => 'auth:api'], function() {
     Route::get('/products/get',[ProductController::class,'getProductById']);
     Route::delete('/products/delete/{productId}',[ProductController::class,'deleteProductById']);
     Route::post('/products/create',[ProductController::class,'store']);
-    Route::put('/products/update',[ProductController::class,'update']);
+    Route::post('/products/update',[ProductController::class,'update']);
     Route::get('/products/getByCategory',[ProductController::class,'getProductByCategory']);
 
 // shopping cart

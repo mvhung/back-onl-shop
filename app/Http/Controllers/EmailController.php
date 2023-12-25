@@ -39,8 +39,8 @@ class EmailController extends Controller
     {
         if ($request->otp === $this->otp)
         {
-            return response()->json(['message' => "verified"], 200);
+            return "true";
         }
-        return response()->json(['message' => "rejected"], 200);
+        return "false";
     }
 }

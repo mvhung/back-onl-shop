@@ -25,7 +25,7 @@ class EmailController extends Controller
     public function sendOTP(Request $request)
     {
         $email1 = $request->email;
-        $randomNumber = rand(000000, 999999); // Tạo số ngẫu nhiên từ 1000 đến 9999
+        $randomNumber = rand(111111, 999999); // Tạo số ngẫu nhiên từ 1000 đến 9999
         $randomString = strval($randomNumber);
         $this->otp = $randomString;
             Mail::send('emails.otp', ['phoneNumber' => $request->phoneNumber, 'otp' => $randomString], function ($email) use ($email1) {
